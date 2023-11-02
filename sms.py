@@ -8,8 +8,11 @@ import re
 # Define carrier gateways
 carrier_gateways = {
     "US": {
-        "Verizon": "@vtext.com",
         "AT&T": "@txt.att.net",
+        "AT&T": "@mms.att.net",
+        "Boost": "@smsmyboostmobile.com",
+        "Cricket": "@sms.cricketwireless.net",
+        "Verizon": "@vtext.com",
         "T-Mobile": "@tmomail.net",
         "Sprint": "@messaging.sprintpcs.com",
     },
@@ -49,16 +52,16 @@ carrier_gateways = {
 
 print('''
 
- __         _____  ___ ____  __          __    
-/ _\  /\/\ /__   \/ _ \___ \/ _\  /\/\  / _\   
-\ \  /    \  / /\/ /_)/ __) \ \  /    \ \ \    
-_\ \/ /\/\ \/ / / ___/ / __/_\ \/ /\/\ \_\ \   
-\__/\/    \/\/  \/    |_____\__/\/    \/\__/   
+ __          __    
+/ _\  /\/\  / _\   
+\ \  /    \ \ \    
+_\ \/ /\/\ \_\ \   
+\__/\/    \/\__//   
                                                
 
-Coder Name: Aron-TN
+Coder Name: Anonymous
 Tool Name: SMTP2SMS
-Version: v2''')
+Version: v4''')
 
 
 # Initialize first Tkinter window but withdraw it
@@ -149,11 +152,12 @@ if selected_country and selected_carrier and phone_numbers:
 
         server.login(smtp_user, smtp_password)
         message = input("Enter your message: ")
+        sender_name = input("Enter your name")
         
         for phone_number in phone_number_list:
             cleaned_phone_number = clean_phone_number(phone_number)
             recipient = f"{cleaned_phone_number}{carrier_gateways[selected_country][selected_carrier_name]}"
-            server.sendmail(smtp_user, recipient, message)
+            server.sendmail(sender_name, recipient, message)
             print(f"SMS sent successfully to {phone_number}.")
         server.quit()
     except Exception as e:
